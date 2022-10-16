@@ -2,10 +2,10 @@
 require_once('/wamp/www/Repaso/view/header/header.php');
 require_once('/wamp/www/Repaso/controller/editorialController.php');
 $obj = new editorialController();
-$rows = $obj->index();
+$editoriales = $obj->index();
 ?>
 <div class="mb-3">
-  <a href="#" class="btn btn-primary">Agregar nuevo Usuario</a>
+  <a href="create.php" class="btn btn-primary">Agregar nuevo Usuario</a>
 </div>
 
 
@@ -18,14 +18,16 @@ $rows = $obj->index();
     </tr>
   </thead>
   <tbody>
-    <?php if ($rows) : ?>
-      <?php foreach ($rows as $row) : ?>
+    <?php if ($editoriales) : ?>
+      <?php foreach ($editoriales as $editorial) : ?>
         <tr>
-          <th><?= $row["id"] ?></th>
-          <th><?= $row["editorial"] ?></th>
+          <th><?= $editorial["id"] ?></th>
+          <th><?= $editorial["editorial"] ?></th>
           <th>
-            <a href="show.php?id=<?= $row[0] ?>" class="btn btn-primary">ver</a>
-            <a href="edit.php?id=<?= $row[0] ?>" class="btn btn-success">Actualizar</a>
+            <a href="show.php?id=<?= $editorial[0] ?>" class="btn btn-primary">ver</a>
+            <a href="edit.php?id=<?= $editorial[0] ?>" class="btn btn-success">Actualizar</a>
+            <a href="delete.php?id=<?= $editorial[0]  ?>" class="btn btn-danger">Eliminar ok</a>
+
             <!-- Button trigger modal -->
             <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Eliminar</a>
 
@@ -43,13 +45,12 @@ $rows = $obj->index();
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">cerrar</button>
-                    <a href="delete.php?id=<?= $row[0]  ?>" class="btn btn-danger">Eliminar</a>
+                    <a href="delete.php?id=<?= $editorial[0]  ?>" class="btn btn-danger">Eliminar</a>
                     <!--  <button type="button" class="btn btn-danger">Save changes</button> -->
                   </div>
                 </div>
               </div>
             </div>
-
           </th>
         </tr>
       <?php endforeach ?>
@@ -61,8 +62,6 @@ $rows = $obj->index();
   </tbody>
 </table>
 
-</body>
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-
-</html>
+<?php 
+require_once('/wamp/www/Repaso/view/header/footer.php')
+?>

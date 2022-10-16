@@ -25,8 +25,18 @@ public function show($id){
     $stament = $this->PDO->prepare("SELECT * FROM editorial WHERE id = :id limit 1");
     $stament->bindParam(":id", $id);
     return ($stament->execute()) ? $stament->fetch() :false;
+}
 
-
+public function update($id, $editorial){
+    $stament = $this->PDO->prepare("UPDATE editorial SET editorial = :editorial WHERE id= :id");
+    $stament->bindParam(":editorial", $editorial);
+    $stament->bindParam(":id", $id);
+    return ($stament->execute()) ? $id : false;
+}
+public function delete($id){
+    $stament = $this->PDO->prepare("DELETE FROM editorial WHERE id = :id");
+    $stament->bindParam(":id",$id);
+    return ($stament->execute()) ? true : false ;
 }
 
 }

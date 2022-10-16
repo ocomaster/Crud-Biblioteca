@@ -22,6 +22,14 @@ public function show($id){
     return ($this->model->show($id) != false) ? $this->model->show($id) : header("Location:index.php");
 }
 
+public function update($id, $editorial){
+    return ($this->model->update($id, $editorial) !=false) ? header("Location:show.php?id".$id): header("Location:index.php");
+}
+
+public function delete($id){
+return ($this->model->delete($id)) ? header("Location:index.php") : header("Location:show.php?id=".$id);
+}
+
 
 
 } 
