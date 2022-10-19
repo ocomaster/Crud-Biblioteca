@@ -1,45 +1,69 @@
 <?php
+require_once('/wamp/www/Repaso/view/header/header.php');
 require_once('/wamp/www/Repaso/controller/nombrelibrosController.php');
+$obj = new nombrelibrosController();
+  $libros =  $obj->index();
+
 
 ?>
+<div class="mb-3">
+  <a href="create.php" class="btn btn-primary">Agregar nuevo Usuario</a>
+</div>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <title>Autores</title>
-</head>
-<body>
 
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
       <th scope="col">ID</th>
       <th scope="col">Nombre</th>
+      <th scope="col">Acciones</th>
     </tr>
   </thead>
   <tbody>
-    <?php
+    <?php if ($libros) : ?>
+      <?php foreach ($libros as $libro) : ?>
+        <tr>
+          <th><?= $libro["id"] ?></th>
+          <th><?= $libro["nombre"] ?></th>
+          <th>
+            <a href="show.php?id=<?= $libro[0] ?>" class="btn btn-primary">ver</a>
+            <a href="edit.php?id=<?= $libro[0] ?>" class="btn btn-success">Actualizar</a>
+            <a href="delete.php?id=<?= $libro[0]  ?>" class="btn btn-danger">Eliminar ok</a>
 
-   
-    foreach ($resultadoNLibros as $row) {
-        ?>
-    <tr>
-      <th scope="row"><?= $row["id"] ?></th>
-      <td><?= $row["id"] ?></td>
-      <td><?= $row["nombre"] ?></td>
+            <!-- Button trigger modal -->
+            <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Eliminar</a>
 
-    </tr>
-    <?php } ?>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">¿Desea eliminar el registro?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Una vez eliminado no se podra recuperar el registro
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">cerrar</button>
+                    <a href="delete.php?id=<?= $libro[0]  ?>" class="btn btn-danger">Eliminar</a>
+                    <!--  <button type="button" class="btn btn-danger">Save changes</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </th>
+        </tr>
+      <?php endforeach ?>
+    <?php else :  ?>
+      <tr>
+        <td colspan="3" class="text-center">No hay registros</td>
+      </tr>
+    <?php endif; ?>
   </tbody>
 </table>
 
-</body>
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-</html>
+<?php 
+require_once('/wamp/www/Repaso/view/header/footer.php')
+?>
